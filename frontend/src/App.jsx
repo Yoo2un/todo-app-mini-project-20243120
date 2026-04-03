@@ -8,7 +8,7 @@ function App() {
   // 1. 서버에서 목록 가져오기 (Read)
   const fetchTodos = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/todos')
+      const res = await axios.get('https://todo-app-mini-project-20243120.vercel.app/api/todos')
       setTodos(res.data)
     } catch (err) {
       console.error("데이터 로딩 실패!", err)
