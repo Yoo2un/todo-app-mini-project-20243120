@@ -5,10 +5,12 @@ function App() {
   const [todos, setTodos] = useState([])
   const [input, setInput] = useState('')
 
+  const API_URL = 'https://todo-backend-20243120.vercel.app/api/todos'
+
   // 1. 서버에서 목록 가져오기 (Read)
   const fetchTodos = async () => {
     try {
-      const res = await axios.get('https://todo-backend-20243120.vercel.app/api/todos')
+      const res = await axios.get(API_URL)
       setTodos(res.data)
     } catch (err) {
       console.error("데이터 로딩 실패!", err)
@@ -23,8 +25,7 @@ function App() {
   const addTodo = async () => {
     if (!input) return
     try {
-      // 백엔드 Schema에 맞춰 'title'로 보냅니다.
-      await axios.post('http://localhost:5000/api/todos', { title: input })
+      await axios.post(API_URL, { title: input })
       setInput('')
       fetchTodos() 
     } catch (err) {
@@ -35,7 +36,7 @@ function App() {
   // 3. 할 일 삭제하기 (Delete)
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/todos/${id}`)
+      await axios.delete(`${API_URL}/${id}`)
       fetchTodos()
     } catch (err) {
       console.error("삭제 실패!", err)
@@ -45,7 +46,7 @@ function App() {
   // 4. 완료 상태 변경 (Update)
   const toggleComplete = async (todo) => {
     try {
-      await axios.put(`http://localhost:5000/api/todos/${todo._id}`, {
+      await axios.put(`${API_URL}/${todo._id}`, {
         completed: !todo.completed
       })
       fetchTodos()
